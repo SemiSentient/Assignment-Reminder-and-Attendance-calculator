@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Add assignment | Student Reminder{% endblock %}
+{% block content %}
+<section>
+  <h1 class="page-title">Add assignment</h1>
+  {% if not subjects %}
+  <p class="empty">Add a subject first, then come back. <a href="{{ url_for('attendance') }}">Add subjects</a></p>
+  {% else %}
+  <form method="post" class="form">
+    <label for="subject_id">Subject</label>
+    <select id="subject_id" name="subject_id" required>
+      <option value="" disabled selected>Choose a subject</option>
+      {% for s in subjects %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+    </select>
+
+    <label for="title">Assignment name</label>
+    <input id="title" name="title" type="text" maxlength="120" required>
+
+    <label for="deadline">Deadline</label>
+    <input id="deadline" name="deadline" type="date" min="{{ today }}" required>
+
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <button type="submit" class="btn">Save assignment</button>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}
